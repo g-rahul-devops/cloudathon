@@ -1,6 +1,9 @@
 package com.example.cloud;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,22 +18,35 @@ public class EndpointController {
 	
     @Autowired
     private DataSource dataSource;
+    
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @GetMapping("/check")
+    public ResponseEntity<String> checkDbConnection() {
+        try {
+            jdbcTemplate.queryForObject("SELECT 1", Integer.class);
+            return ResponseEntity.ok("Database connection is successful!");
+        } catch (Exception e) {
+        	throw e;
+        }
+    }
 
     @GetMapping("/api")
     public String sayHello() {
         return "Hello, World!";
     }
     
-    @GetMapping("/checkDB")
-    public String checkDbConnection() throws SQLException {
-        try (Connection connection = dataSource.getConnection()) {
-            if (connection != null) {
-                return "Database connected!";
-            } else {
-                return "Database connection failed!";
-            }
-        }
-    }
+//    @GetMapping("/checkDB")
+//    public String checkDbConnection() throws SQLException {
+//        try (Connection connection = dataSource.getConnection()) {
+//            if (connection != null) {
+//                return "Database connected!";
+//            } else {
+//                return "Database connection failed!";
+//            }
+//        }
+//    }
     
     @GetMapping("/dummyResponse")
     public Portfolio getDummyResponse() {
