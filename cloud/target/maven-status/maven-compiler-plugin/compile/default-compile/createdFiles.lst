@@ -1,0 +1,4 @@
+com\example\service\UserService.class
+com\example\cloud\CloudApplication.class
+com\example\cloud\EndpointController.class
+com\example\controller\UserController.class

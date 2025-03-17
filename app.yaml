@@ -1,8 +1,0 @@
-runtime: java17  # Set the runtime to Java 11
-env: standard   # This uses the standard environment
-
-instance_class: F2  # Specify the instance type for scaling
-
-handlers:
-  - url: /.*  # Route all URLs to your Spring Boot app
-    script: auto
